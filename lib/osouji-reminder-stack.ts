@@ -1,16 +1,28 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import { RestApi, LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
 
 export class OsoujiReminderStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    const myFunction = new lambda.Function(this, "MyLambda", {
+      code: lambda.Code.fromAsset("lambdas"),
+      handler: "bootstrap",
+      runtime: lambda.Runtime.PROVIDED_AL2023,
+    });
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'OsoujiReminderQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    const gateway = new RestApi(this, "MyGateway", {
+      defaultCorsPreflightOptions: {
+        allowOrigins: ["*"],
+        allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTION"],
+      },
+    });
+
+    const integration = new LambdaIntegration(myFunction);
+    const testResource = gateway.root.addResource("test");
+
+    testResource.addMethod("GET", integration);
   }
 }
