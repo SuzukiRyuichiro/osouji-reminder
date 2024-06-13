@@ -23,6 +23,11 @@ func main() {
 	message = fmt.Sprintf("hi %s, you are %d years old and weigh %.1f kg", scooter.Name, scooter.Age, scooter.Weight)
 	fmt.Println(message)
 
+	prices := map[string]int{"udon": 400, "ramen": 800}
+	fmt.Println(prices["soba"])
+
+	m := map[string]string{"udon": "400", "ramen": "800"}
+	fmt.Println(m["soba"])
 }
 
 func addOne(i int) int {
