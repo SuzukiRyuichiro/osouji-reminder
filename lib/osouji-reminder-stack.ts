@@ -11,6 +11,7 @@ export class OsoujiReminderStack extends cdk.Stack {
       code: lambda.Code.fromAsset("lambdas"),
       handler: "bootstrap",
       runtime: lambda.Runtime.PROVIDED_AL2,
+      architecture: lambda.Architecture.ARM_64,
     });
 
     const gateway = new RestApi(this, "MyGateway", {
