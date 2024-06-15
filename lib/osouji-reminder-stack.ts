@@ -10,7 +10,7 @@ export class OsoujiReminderStack extends cdk.Stack {
     const myFunction = new lambda.Function(this, "MyLambda", {
       code: lambda.Code.fromAsset("lambdas"),
       handler: "bootstrap",
-      runtime: lambda.Runtime.PROVIDED_AL2023,
+      runtime: lambda.Runtime.PROVIDED_AL2,
     });
 
     const gateway = new RestApi(this, "MyGateway", {
