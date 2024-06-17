@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -14,7 +15,8 @@ type App struct {
 
 func (a *App) Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	responseBody := map[string]string{
-		"message": "never gonna give you up",
+		"message": "never gonna let you down",
+		"env":     os.Getenv("LINE_CHANNEL_SECRET"),
 	}
 
 	responseJSON, err := json.Marshal(responseBody)
